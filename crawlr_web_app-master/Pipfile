@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+
+[requires]
+python_version = "3.6"
+
+[packages]
+Django = "*"
+pytz = "*"
+sqlparse = "*"
+dj-database-url = "*"
+dj-static = "*"
+gunicorn = "*"
+Unipath = "*"
+python-decouple = "*"
+Pillow = "*"
+Markdown = "*"
+bleach = "*"
+psycopg2 = "*"
+whitenoise = "*"
+requests = "*"

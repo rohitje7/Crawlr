@@ -1,0 +1,157 @@
+{%load static%}
+<style>
+    body {
+        font-family: 'Quicksand';
+      }
+    .navbar-custom {
+        background-color: #197DAF;
+    }
+
+    .navbar .dropdown-menu {
+        background-color: #F0F0F0;
+        width: 310px;
+        border-radius: 10px;
+    }
+
+    .buttn1 {
+        border-radius: 50%;
+    }
+
+    .buttn1:focus,
+    .buttn1:active {
+        outline: none !important;
+        box-shadow: none;
+    }
+
+    .btn:focus,
+    .btn:active {
+        outline: none !important;
+        box-shadow: none;
+    }
+
+    .tr {
+        font-size: calc(100% + 0.3vw + 0.3vh);
+        font-family: 'Quicksand';
+    }
+
+    .btz {
+        background-color: gold;
+        border-radius: 20px;
+        border: none;
+        padding: 4px 17px;
+    }
+
+    .btz1 {
+        background-color: #ff3333;
+        border-radius: 20px;
+        border: none;
+        padding: 4px 20px;
+    }
+
+    .acnvb:hover {
+        opacity: 3
+    }
+
+    .acnvb:hover {
+        background-color: #1991d1;
+    }
+</style>
+<nav class="navbar navbar-expand-md navbar-dark navbar-custom" style="height: 47px;">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse mr-5" id="navbarSupportedContent">
+        <div style="color:white;font-weight: bold;font-size: large;text-shadow: 2px 2px #00ace6;">
+            CRAWLR
+        </div>
+        <ul class="navbar-nav mx-auto">
+            <li class="nav-item mr-5 acnvb">
+                <a class="nav-link" href="{%url 'homepage'%}" style="color: white;">Home
+                </a>
+            </li>
+            <li class="nav-item mr-5 acnvb">
+                <a class="nav-link" href="{% url 'ques:all'%}" style="color: white;">Connect</a>
+            </li>
+            <li class="nav-item acnvb">
+                <a class="nav-link" href="{%url 'search:all'%}" style="color: white;"> My Searches</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav flex-row justify-content-between ml-auto">
+            <li class="dropdown order-1">
+                <button type="button" id="dropdownMenu1" data-toggle="dropdown" class="btn dropdown-toggle buttn1">
+                    <span id="profileimage1">
+
+                    </span>
+                    <span style="font-size: small;color:white">
+                        <span id="fullname1"></span>
+                    </span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right mt-0">
+                    <div class="loading" style="display: block;text-align:center">
+                        <lottie-player src="https://assets3.lottiefiles.com/datafiles/fPx4vaZrul2Fvg9/data.json"
+                            mode="normal" speed="1" style="width:150px; height: 150px;" hover loop autoplay>
+                        </lottie-player>
+                    </div>
+                    <form id="profileformnavbar" style="display: none;">
+                        <li class="x3 px-3 py-2">
+                            <div>
+                                <div style="text-align: center;">
+                                    <p class="tr mb-5" style="display:inline;font-size: small;"><strong>My
+                                            Account</strong>
+                                    </p>
+                                    <div class="mt-5 mb-3" id="profileimage2">
+                                        <img src="" alt="" width="80" height="80">
+                                    </div>
+                                    <p class="mb-1" style="font-size: medium;font-weight: 700;" id="fullname2">{Name
+                                        John}
+                                    </p>
+                                    <p class="mb-3" style="font-size: x-small;" id="email"></p>
+                                    <p style="font-size: x-small;font-weight:600;" id="about"></p>
+                                </div>
+                                <div class="row mt-4" style="text-align: center;">
+                                    <div class="col-sm-4">
+                                        <div style="font-size: small;font-weight: 600;" id="searches"></div>
+                                        <div style="font-size: small">Searches</div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div style="font-size: small;font-weight: 600;" id="questions"></div>
+                                        <div style="font-size: small">Questions</div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div style="font-size: small;font-weight: 700;" id="replys"></div>
+                                        <div style="font-size: small">Karma</div>
+                                    </div>
+                                </div>
+                                <div class="row mt-5" style="text-align: center;">
+                                    <div class="col-sm-6" id="premiumbutton">
+                                        <a href=""></a>
+                                        <a href="{%url 'ques:payment_api'%}"
+                                            style="font-size: small;color: black;text-decoration:none"
+                                            class="btn btn-lg btz">
+
+                                            <span><i style="color: black"
+                                                    class="fa fa-star-o"></i>&nbsp;Premium</span>&nbsp
+
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-0"></div>
+                                    <div class="col-sm-6">
+                                        <a href="{%url 'auth:logout'%}"
+                                            style="font-size: small;color: white;text-decoration:none"
+                                            class="btn btn-lg btz1">
+                                            <span><i class="fa fa-power-off"></i>&nbsp;Log</span>&nbsp<span>out</span>
+
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </form>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <input type="hidden" id="profileurl" value="{% url 'auth:profile'%}">
+</nav>

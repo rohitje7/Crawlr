@@ -1,0 +1,185 @@
+{%extends 'base.html'%}
+{%load static%}
+
+{%block title%}Questions{%endblock%}
+{%block content%}
+<style>
+  body {
+    font-family: Quicksand;
+    background-color: #F0F0F0;
+  }
+
+  .button1 {
+    background-color: #F0F0F0;
+    border: none;
+    outline: none !important;
+    font-size: 22px;
+    cursor: pointer;
+  }
+
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #F8F8F8;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 14px;
+  }
+
+  .dropdown-item:active {
+    background: lightblue;
+  }
+
+  .dropdown-item:hover {
+    background: lightblue;
+  }
+
+  .plusbtn {
+    background-color: #F0F0F0;
+    border: none;
+    border-radius: 50%;
+    outline: none !important;
+  }
+
+  .border {
+    width: 100%;
+    border: 1px solid #E8E8E8;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+
+    -webkit-box-shadow: 0px 0px 7px #E8E8E8;
+    -moz-box-shadow: 0px 0px 7px #E8E8E8;
+    box-shadow: 0px 0px 7px #E8E8E8;
+  }
+</style>
+<!-- Message -->
+<div class="row">
+  <div class="col-sm-12">
+    {% if messages %}
+    <ul class="info">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <div class="alert" id="mesaage" style="display:None"></div>
+  </div>
+</div>
+
+<!-- Button trigger modal -->
+
+<!-- Add Question Popup -->
+<div class="modal fade" id="Addquestion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Type Your Question Here...</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <textarea name="add_question" id="add_question" data-url="{%url 'ques:post_api'%}" data-csrf='{{csrf_token}}'
+          rows="8" cols="50"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closepopque">Close</button>
+        <button type="button" class="btn btn-primary" onclick="postQuestion()">Post</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mt-5">
+  <div class="col-sm-0"></div>
+  <div class="col-sm-8">
+
+    <div align="right" class="mb-5">
+      <button type="button" class="plusbtn" data-toggle="modal" data-target="#Addquestion">
+        <i class="fa fa-plus-circle" style="font-size:24px;color:#36ce77"></i>
+      </button>
+    </div>
+    <div class="infinite-container mb-5">
+      {%for data in question%}
+      <div class="infinite-item" data-section='ques'>
+        <div class="mt-3">
+          <span>
+            <img class="rounded-circle z-depth-2" src="{{data.image}}" width="40" height="40">
+          </span>
+          <span style="font-size: 13px;">
+            <span><b>{{data.fullName}}</b></span>
+            <span>asks</span>
+          </span>
+          <span style="float: right">
+            {%if user == data.askerID%}
+            <div class="dropdown">
+              <button class="button1" type="button" data-toggle="dropdown">
+                <span style="font-weight:bold">. . .</span>
+              </button>
+              <div class="dropdown-menu">
+                <!-- <a class="dropdown-item" href="#" style="color: black;">
+                              <span class="mr-3"><i class="fa fa-edit"></i></span>Reply</a> -->
+                <a class="dropdown-item" href="{%url 'ques:delete_ques' data.id%}" style="color: black;">
+                  <span class="mr-3"><i class="fa fa-trash" style="color:red;"></i>&nbsp;</span>Delete</a>
+              </div>
+            </div>
+            {%endif%}
+          </span>
+          <div onclick="location.href='{%url 'ques:reply' data.id%}?question={{data.question}}&asker={{data.askerID}}'"
+            style="cursor:pointer" class="ml-5 mt-3" style="font-size: 15px;font-weight: bold">
+            {{data.question}}
+          </div>
+          <div align="right" style="font-size: 13px">
+            <span>{{data.replies}}</span>
+            <span>replies</span>
+            <span class="ml-3"><script  type="text/javascript" >document.write(getTimeSince({{data.timestamp}}))</script></span>
+            <span>ago</span>
+          </div>
+        </div>
+      </div>
+      {%endfor%}
+    </div>
+    <div class="loading" style="display: none;text-align:center">
+      <lottie-player src="https://assets3.lottiefiles.com/datafiles/fPx4vaZrul2Fvg9/data.json" mode="normal" 
+        speed="1" style="width:150px; height: 150px;" hover loop autoplay>
+      </lottie-player>
+    </div>
+    {%if next%}
+    <a class="infinite-more-link" href="?page={{ pageNo }}"></a>
+    {%endif%}
+  </div>
+  <div class="col-sm-4">
+    <div class="row">
+      <div class="col-sm-0"></div>
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">
+        <div class="mb-4 mt-3" style="color: #008081;font-size:30px;text-align: center;">
+          Trending
+        </div>
+        <!-- for trending-->
+        {%for data in trending.data%}
+        <div class="border mt-2" style="background-color:white;display: block;min-height: 40px;">
+          <div class="mt-2" style="font-size: small;display: block;width: 97%;">
+            <span>
+              &nbsp;&nbsp;{{data.searchQuery}}
+            </span>
+            <span style="float: right;">
+              <i class="fa fa-trophy" style="color: gold;"></i>
+              <p style="color:#FFD700;display: inline">{{data.points}}</p>
+            </span>
+          </div>
+        </div>
+        {%endfor%}
+        <!--  end for loop -->
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{%endblock%}
+
+{%block script%}
+<script src="{%static 'js/question.js'%}" charset="utf-8"></script>
+{%endblock%}

@@ -1,0 +1,61 @@
+{%extends 'base_without_navbar.html'%}
+{% load static %}
+{%block content%}
+<style>
+  body {
+    background-image:url("{%  static "Images/bg1.png" %}");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: 'Quicksand';
+    font-size: 100%;
+    overflow: hidden;
+  }
+
+  .bt1 {
+    background-color: white;
+    border: none;
+    padding: 6px 21px;
+    text-align: center;
+    font-size: 24px;
+    border-radius: 10px;
+  }
+
+  .text-responsive {
+    margin-top: 2rem;
+    margin-left: 8rem;
+    font-size: calc(100% + 6vw + 6vh);
+    font-family: 'Quicksand';
+  }
+
+  .text-button {
+    font-size: calc(30% + 1vw + 1vh);
+    font-family: 'Quicksand';
+  }
+
+  .vertical-bottom {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: 60vh;
+    height: 100vh;
+  }
+</style>
+<h1 class="text-responsive" align="left">crawlr</h1>
+<div align="center" class="text-center" style="height:80vh;">
+  <div class="row text-center vertical-bottom">
+    <div class="col-sm-12 mb-3">
+      <button class="bt1 text-button" type="submit">
+        <a style="text-decoration: none;color: black;" href="https://crawlr-api.herokuapp.com/auth/linkedin">
+          <i class="fa fa-linkedin-square" style="color:#2867B2"></i>
+          Continue with LinkedIn
+        </a>
+      </button>
+      <p align="center" class="mt-3" style="font-size: 16px;color: black">By continuing, you agree to our <strong>Terms and Conditions</strong></p>
+    </div>
+  </div>
+</div>
+{%endblock%}

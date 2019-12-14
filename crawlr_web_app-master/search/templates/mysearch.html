@@ -1,0 +1,100 @@
+{%extends 'base.html'%}
+{%load static%}
+
+{%block title%}searches{%endblock%}
+{%block content%}
+
+    <style>
+            body{
+                font-family: Quicksand;
+                background-color: whitesmoke;
+            }
+          .border {
+            width: 100%;
+            border: 1px solid #E8E8E8;
+            -webkit-border-radius: 7px;
+            -moz-border-radius: 7px;
+            border-radius: 7px;
+
+            -webkit-box-shadow: 0px 0px 7px #E8E8E8;
+            -moz-box-shadow: 0px 0px 7px #E8E8E8;
+            box-shadow: 0px 0px 7px #E8E8E8;
+          }
+    </style>
+
+<!-- Message -->
+<div class="row">
+    <div class="col-sm-12">
+      {% if messages %}
+      <ul class="info">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+      <div class="alert" id="mesaage" style="display:None"></div>
+    </div>
+  </div>
+
+  <!-- searches -->
+    <div align="center">
+        <div class="row mt-5">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <div>
+                    <h3 style="font-weight: bold;font-size: 23px;">My Searches</h3>
+                </div>
+                <div class="mt-5">
+                    <div class="infinite-container">
+                    {%for data in searches%}
+                      <!-- bar 1-->
+                      <div class="infinite-item">
+                        <div class="border mt-2" style="background-color:white;display: block;min-height: 47px;">
+                          <div class="mt-2" style="font-size: large;display: block;width: 97%;">
+                            <a href="{%url 'search:resultall'%}?q={{data.id}}&t={{data.searchQuery}}" style="color: black;text-decoration:none">
+                            <span style="float: left;">
+                              &nbsp;&nbsp;{{data.searchQuery}}
+                            </span>
+                          </a>
+                            <span style="float: right;font-size: 22px;margin-top: -4px">
+                              {%if data.status == 'D'%}
+                             <i class="fa fa-check-circle-o" style="color: limegreen;"></i>
+                             {%endif%}
+                             {%if data.status == 'ERR'%}
+                             <i class="fa fa-times-circle-o" style="color: #F55D45;"></i>
+                             {%endif%}
+                             {%if data.status == 'C'%}
+                              <i class="fa fa-exclamation-triangle" style="color: yellow;"></i>
+                              {%endif%}
+                              {%if data.status == 'P'%}
+                              <span style="float: right;">
+                                  <a href="{%url 'search:cancel'%}?id={{data.id}}"
+                                     style="font-size: small;color: white;text-decoration:none;"
+                                     class="btn btn-lg btz1">
+                                      <span>Cancel</span>
+                                  </a>
+                              </span>
+                              {%endif%}
+                            </span>
+                          </div>
+                          </div>
+                        </div>  
+                    {%endfor%}
+                    </div>
+                    <div class="loading" style="display: none;text-align:center">
+                        <lottie-player src="https://assets3.lottiefiles.com/datafiles/fPx4vaZrul2Fvg9/data.json" mode="normal"
+                          speed="1" style="width:150px; height: 150px;" hover loop autoplay>
+                        </lottie-player>
+                      </div>
+                      {%if next%}
+                      <a class="infinite-more-link" href="?page={{ pageNo }}"></a>
+                      {%endif%}
+                </div>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+    </div>
+{%endblock%}
+{%block script%}
+<script src="{%static 'js/question.js'%}" charset="utf-8"></script>
+{%endblock%}

@@ -1,0 +1,72 @@
+{%extends 'base.html'%}
+{%load static%}
+
+{%block title%}Search{%endblock%}
+{%block content%}
+<style>
+  body {
+    background-image:url("{%  static "Images/bg1.png" %}");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: 'Quicksand';
+    font-size: 100%;
+    overflow: hidden;
+  }
+
+  .button1 {
+    background-color: #F55D45;
+    border-radius: 20px;
+    border: none;
+    padding: 4px 25px;
+  }
+
+  .text-responsive {
+    font-size: calc(100% + 6vw + 6vh);
+    font-family: 'Quicksand';
+  }
+
+  .inrep {
+    border-radius: 22px;
+    width: 100%;
+    border: 1px solid #E8E8E8;
+    -webkit-border-radius: 22px;
+    -moz-border-radius: 22px;
+    -webkit-box-shadow: 0px 0px 3px #E8E8E8;
+    -moz-box-shadow: 0px 0px 3px #E8E8E8;
+    box-shadow: 0px 0px 3px #E8E8E8;
+  }
+</style>
+<div class="row mt-5">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-8 mt-5">
+
+    <div class="text-responsive mb-5" align="center">
+      <h3>Get in-depth info of a <b>domain</b>, </h3>
+      <h3>Verify an <b>email address</b> or </h3>
+      <h3>Just type in a <b>username!</b> </h3>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="mb-4">
+          <form style="width: 100%;" action="{%url 'search:result'%}" method="POST">
+            {%csrf_token%}
+            <span class="form-group mt-4 ">
+              <input type="text" style="height: 42px;" class="form-control inrep" name="q" placeholder="  Search for a domain, email or a username...">
+            </span>
+            <button style="float: right;" type="submit" class="btn btn-success button1 mt-2">
+              <i class="fa fa-search"></i>
+              Search
+            </button>
+            </span>
+            <div style="clear: both"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="col-sm-2"></div>
+  {% endblock %}

@@ -1,0 +1,72 @@
+{%extends 'base_without_navbar.html'%}
+{% load static %}
+{%block content%}
+<style>
+  body {
+    font-family: 'Quicksand';
+    font-size: 100%;
+      background-color : white;
+  }
+
+  .bt {
+    background-color: #82CAFA;
+    border: none;
+    border-radius: 50%;
+    font-size: 26px;
+  }
+
+  .text-responsive {
+    font-size: calc(100% + 1.3vw + 1.3vh);
+    font-family: 'Quicksand';
+  }
+
+  .form-control {
+    border-radius: 14px;
+    border: none;
+    border-bottom: 1px solid #E0E0E0;
+    box-shadow: 0 1px 5px -2px rgba(0, 0, 0, .2);
+
+    &:focus {
+      box-shadow: 0 1px 5px -2px #42A5F5;
+      border-bottom: 1px solid #2196F3;
+    }
+</style>
+<div align="center">
+    <div class="row mt-5">
+        <div class="col-sm-12"></div>
+    </div>
+  <div class="row mt-5 mb-2">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+      <img class=" rounded-circle z-depth-2" src="{{jwt_token.image}}" width="120" height="120">
+    </div>
+    <div class="col-sm-4"></div>
+  </div>
+  <p class="text-responsive mb-3" style="display:inline;">Welcome </p>
+  <h3 style="display:inline;font-size:40px;font-weight: 700">{{jwt_token.fullName}}</h3>
+  <h3 style="display:inline;font-size:34px;">!&nbsp<img src={%  static "Images/prty1.png" %} /></h3>
+  <p style="font-size:28px;color:#565A54;" class="mt-4">Confirm your details for us!</p>
+  <div style="position:relative; left:5px;width: 320px;text-align: left" class="mb-5 mt-4">
+    <form class="form-group mr-2" action="{% url 'authentication:profile_comfirm'%}" method="post">
+      {%csrf_token%}
+      <input id="id_provider" type="hidden" name="provider" value="{{jwt_token.provider}}">
+      <input id="id_id" type="hidden" name="id" value="{{jwt_token.id}}">
+      <input id="id_image" type="hidden" name="image" src="{{jwt_token.image}}">
+      <div class="mb-4">
+        <label for="exampleInputName"><strong>Name</strong></label>
+        <input type="text" class="form-control" name="fullName" id="id_fullName" placeholder="Enter your name"
+          value="{{jwt_token.fullName}}">
+      </div>
+      <div>
+        <label for="exampleInputEmail"><strong>Email</strong></label>
+        <input type="email" class="form-control" name="email" id="id_email" placeholder="Enter your email"
+          value="{{jwt_token.email}}">
+      </div>
+        <div class="row mt-5"></div>
+        <div align="center" class="col-sm-12">
+             <button type="submit" class="btn btn-info btn-lg bt">Go</button>
+        </div>
+    </form>
+  </div>
+</div>
+{%endblock%}
